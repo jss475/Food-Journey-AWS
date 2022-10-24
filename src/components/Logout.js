@@ -25,9 +25,6 @@ function Logout() {
     localStorage.setItem("username", "");
   }
 
-  console.log(currentUser);
-  console.log(loggedIn);
-
   return (
     <Button type="button" onClick={handleLogOut} variant="danger">
       Log Out

@@ -1,5 +1,4 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Navbar, Nav } from "react-bootstrap";
 import Logout from "./Logout";
@@ -12,16 +11,13 @@ function NavbarComponent({loggedIn}) {
   if (loggedIn === true) {
     loggedInCheck = true;
   } else {
-
     loggedInCheck = false;
   }
 
   //if you refresh, i'm checking to see if you're already there
   const userLoggedBefore = localStorage.getItem("username");
   if (userLoggedBefore === null || userLoggedBefore === '') {
-
   } else {
-
     loggedInCheck = true;
   }
   return (
@@ -35,10 +31,8 @@ function NavbarComponent({loggedIn}) {
           {loggedInCheck ? null : <>
           <Nav.Link href="/signin">Sign In</Nav.Link>
           <Nav.Link href="/signup">Sign Up</Nav.Link></>}
-          
-          
         </Nav>
-        <Logout />
+        {loggedInCheck ?  <Logout /> : null}
       </Container>
     </Navbar>
   );

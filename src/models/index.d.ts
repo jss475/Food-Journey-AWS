@@ -40,7 +40,7 @@ type EagerUser = {
   readonly id: string;
   readonly username: string;
   readonly password: string;
-  readonly liked?: (number | null)[] | null;
+  readonly liked?: (string | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -49,7 +49,7 @@ type LazyUser = {
   readonly id: string;
   readonly username: string;
   readonly password: string;
-  readonly liked?: (number | null)[] | null;
+  readonly liked?: (string | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

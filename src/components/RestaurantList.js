@@ -1,19 +1,23 @@
-import React, { useState, useEffect, useContext, useTransition } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import NotLiked from "./NotLiked";
 import Liked from "./Liked";
 import { UserLoggedInContext } from "../context/UserLoggedIn";
 import { AllRestaurantsContext } from "../context/AllRestaurants";
+import { DataStore } from '@aws-amplify/datastore';
+import { User } from '../models';
 
-//we initialize an array of what is liked
-let likedArray = [];
+
 
 function RestaurantList({ allUsers, currentPath, loggedIn }) {
+  let likedArray = []
   const [currentUser, setCurrentUser] = useContext(UserLoggedInContext); //username is set to currentUser
   const [allRestaurants] = useContext(AllRestaurantsContext);
+  
   //then we can do a filter where we return id
   const userID = allUsers.filter((user) => {
     return user.username === currentUser;
   });
+
 
   const [likedRes, setLikedRes] = useState([]);
   const [dislikedRes, setDislikedRes] = useState(allRestaurants);
@@ -27,10 +31,10 @@ function RestaurantList({ allUsers, currentPath, loggedIn }) {
       let likedListOfUser = userID[0].liked;
       //we do a filter on allrestaurants to filter what has been liked already
       let alreadyLiked = allRestaurants.filter((res) => {
-        return likedListOfUser.includes(+res.id);
+        return likedListOfUser.includes(res.id);
       });
       let noLiked = allRestaurants.filter((res) => {
-        return !likedListOfUser.includes(+res.id);
+        return !likedListOfUser.includes(res.id);
       });
       setLikedRes(alreadyLiked); //we're setting the number 1 and 2. Not the restaurant data
       likedArray = likedListOfUser;
@@ -57,17 +61,24 @@ function RestaurantList({ allUsers, currentPath, loggedIn }) {
     const filteredLike = dislikedRes.filter((res) => {
       return res.id !== data.id;
     });
-    //add the restaurant id to the liked array
-    likedArray.push(data.id);
 
-    fetch(`http://localhost:3000/users/${userID[0].id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({ liked: likedArray }), //add the ID of the restaurant into liked
-    });
+    likedArray = userID[0].liked
+
+    let copyLikedArray = [...likedArray]
+    //add the restaurant id to the liked array
+    copyLikedArray.push(data.id);
+
+    const updateUserLiked = async () => {
+      const original = await DataStore.query(User, userID[0].id)
+      /* Models in DataStore are immutable. To update a record you must use the copyOf function
+      to apply updates to the item’s fields rather than mutating the instance directly */
+      await DataStore.save(User.copyOf(original, updated => {
+        updated.liked = copyLikedArray
+      }));
+    }
+
+    //updated liked array for the current user
+    updateUserLiked()
 
     // push the data that we liked to liked restauarant list
     setLikedRes([...likedRes, data]);
@@ -90,19 +101,24 @@ function RestaurantList({ allUsers, currentPath, loggedIn }) {
     //disable dislike button
     // setDisbaleDislike(true);
 
+    likedArray = userID[0].liked
+    let copyLikedArray = [...likedArray]
     //we're going to take liked array and remove the one taht has been disliked
     //need to find index of the dislike one
-    let dislikedIDIndex = likedArray.indexOf(data.id);
-    likedArray.splice(+dislikedIDIndex, 1);
+    let dislikedIDIndex = copyLikedArray.indexOf(data.id);
+    copyLikedArray.splice(+dislikedIDIndex, 1);
 
-    fetch(`http://localhost:3000/users/${userID[0].id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({ liked: likedArray }),
-    });
+    const updateUserLiked = async () => {
+      const original = await DataStore.query(User, userID[0].id)
+      /* Models in DataStore are immutable. To update a record you must use the copyOf function
+      to apply updates to the item’s fields rather than mutating the instance directly */
+      await DataStore.save(User.copyOf(original, updated => {
+        updated.liked = copyLikedArray
+      }));
+    }
+
+    //updated liked array for the current user
+    updateUserLiked()
   }
 
   return (

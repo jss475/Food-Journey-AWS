@@ -5,7 +5,10 @@ const SignedInContext = createContext();
 
 //create context provider
 function SignedInProvider({ children }) {
-  const [loggedIn, setLoggedIn] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(()=> {
+    const logged = localStorage.getItem("username")
+    return logged ? true : false
+  })
 
   const value = [loggedIn, setLoggedIn];
 

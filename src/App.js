@@ -27,7 +27,7 @@ function App() {
   const [currentPath, setCurrentPath] = useState("");
   useEffect(() => {
     return history.listen((location) => {
-      console.log(`You changed the page to: ${location.pathname}`);
+      // console.log(`You changed the page to: ${location.pathname}`);
       setCurrentPath(location.pathname);
     });
   }, [history]);
@@ -137,22 +137,18 @@ function App() {
         //save current user
         setCurrentUser(e.target.username.value);
 
-        //post the new user into the database
-        let configObj = {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username: e.target.username.value,
-            password: e.target.password.value,
-            liked: [],
-          }),
-        };
-
-        fetch("http://localhost:3000/users", configObj)
-          .then((res) => res.json())
-          .then((data) => setAllUsers([...allUsers, data]));
+        //create the new user function
+        const newUser = async () => {
+          await DataStore.save(
+            new User({
+              "username": e.target.username.value,
+              "password": e.target.password.value,
+              "liked": []
+            })
+          )
+        }
+        //create the new user
+        newUser()
 
         //optimistically setallusers
         setAllUsers([...allUsers, {username: e.target.username.value,
@@ -164,6 +160,7 @@ function App() {
     //reset the form after the submit
     document.querySelector("#sign_up_form").reset();
   }
+  console.log(allUsers[0])
 
   return (
     <div>
