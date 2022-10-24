@@ -13,7 +13,7 @@ type EagerRestaurant = {
   readonly name: string;
   readonly image: string;
   readonly location: string;
-  readonly phone: string;
+  readonly phone?: string | null;
   readonly menulink: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -24,7 +24,7 @@ type LazyRestaurant = {
   readonly name: string;
   readonly image: string;
   readonly location: string;
-  readonly phone: string;
+  readonly phone?: string | null;
   readonly menulink: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;

@@ -35,7 +35,7 @@ export const schema = {
                     "name": "phone",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "menulink": {
@@ -165,5 +165,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.2.0",
-    "version": "98397d64699cc84229dc86624b50f951"
+    "version": "35c94c6eeae1c947516f340cd5738ed4"
 };
