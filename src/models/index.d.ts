@@ -1,53 +1,61 @@
 import { ModelInit, MutableModel } from "@aws-amplify/datastore";
 
-type TaskMetaData = {
+type RestaurantMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
-type NoteMetaData = {
+type UserMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
-type EagerTask = {
+type EagerRestaurant = {
   readonly id: string;
-  readonly title: string;
-  readonly description?: string | null;
-  readonly status?: string | null;
+  readonly name: string;
+  readonly image: string;
+  readonly location: string;
+  readonly phone: string;
+  readonly menulink: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
 
-type LazyTask = {
+type LazyRestaurant = {
   readonly id: string;
-  readonly title: string;
-  readonly description?: string | null;
-  readonly status?: string | null;
+  readonly name: string;
+  readonly image: string;
+  readonly location: string;
+  readonly phone: string;
+  readonly menulink: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
 
-export declare type Task = LazyLoading extends LazyLoadingDisabled ? EagerTask : LazyTask
+export declare type Restaurant = LazyLoading extends LazyLoadingDisabled ? EagerRestaurant : LazyRestaurant
 
-export declare const Task: (new (init: ModelInit<Task, TaskMetaData>) => Task) & {
-  copyOf(source: Task, mutator: (draft: MutableModel<Task, TaskMetaData>) => MutableModel<Task, TaskMetaData> | void): Task;
+export declare const Restaurant: (new (init: ModelInit<Restaurant, RestaurantMetaData>) => Restaurant) & {
+  copyOf(source: Restaurant, mutator: (draft: MutableModel<Restaurant, RestaurantMetaData>) => MutableModel<Restaurant, RestaurantMetaData> | void): Restaurant;
 }
 
-type EagerNote = {
+type EagerUser = {
   readonly id: string;
-  readonly content: string;
+  readonly username: string;
+  readonly password: string;
+  readonly liked?: (number | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
 
-type LazyNote = {
+type LazyUser = {
   readonly id: string;
-  readonly content: string;
+  readonly username: string;
+  readonly password: string;
+  readonly liked?: (number | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
 
-export declare type Note = LazyLoading extends LazyLoadingDisabled ? EagerNote : LazyNote
+export declare type User = LazyLoading extends LazyLoadingDisabled ? EagerUser : LazyUser
 
-export declare const Note: (new (init: ModelInit<Note, NoteMetaData>) => Note) & {
-  copyOf(source: Note, mutator: (draft: MutableModel<Note, NoteMetaData>) => MutableModel<Note, NoteMetaData> | void): Note;
+export declare const User: (new (init: ModelInit<User, UserMetaData>) => User) & {
+  copyOf(source: User, mutator: (draft: MutableModel<User, UserMetaData>) => MutableModel<User, UserMetaData> | void): User;
 }
