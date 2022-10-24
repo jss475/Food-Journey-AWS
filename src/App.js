@@ -160,7 +160,7 @@ function App() {
     //reset the form after the submit
     document.querySelector("#sign_up_form").reset();
   }
-  console.log(allUsers[0])
+  console.log(allUsers[2])
 
   return (
     <div>

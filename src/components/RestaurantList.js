@@ -68,20 +68,28 @@ function RestaurantList({ allUsers, currentPath, loggedIn }) {
     //add the restaurant id to the liked array
     copyLikedArray.push(data.id);
 
+
     const updateUserLiked = async () => {
       const original = await DataStore.query(User, userID[0].id)
+      let copyOriginal = [...original.liked]
+      copyOriginal.push(data.id)
       /* Models in DataStore are immutable. To update a record you must use the copyOf function
       to apply updates to the item’s fields rather than mutating the instance directly */
       await DataStore.save(User.copyOf(original, updated => {
-        updated.liked = copyLikedArray
+        updated.liked = copyOriginal
       }));
     }
 
     //updated liked array for the current user
     updateUserLiked()
 
+
+    let alreadyLiked = allRestaurants.filter((res) => {
+      return copyLikedArray.includes(res.id);
+    });
+
     // push the data that we liked to liked restauarant list
-    setLikedRes([...likedRes, data]);
+    setLikedRes(alreadyLiked);
     // we set all restaurant to show all excepte for the one that we like
     setDislikedRes((dislikedRes) => filteredLike);
     //disable the like button
@@ -110,10 +118,13 @@ function RestaurantList({ allUsers, currentPath, loggedIn }) {
 
     const updateUserLiked = async () => {
       const original = await DataStore.query(User, userID[0].id)
+      let copyOriginal = [...original.liked]
+      let disLikedIDIndex = copyOriginal.indexOf(data.id)
+      copyOriginal.splice(+disLikedIDIndex,1)
       /* Models in DataStore are immutable. To update a record you must use the copyOf function
       to apply updates to the item’s fields rather than mutating the instance directly */
       await DataStore.save(User.copyOf(original, updated => {
-        updated.liked = copyLikedArray
+        updated.liked = copyOriginal
       }));
     }
 

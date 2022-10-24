@@ -12,6 +12,7 @@ function Liked({
   //if statement based off of true/false on logged in or not
 
   const restuarantArray = likedRes.map((res) => {
+    // console.log(res)
     return (
       <RestaurantTile
         key={res.id}
