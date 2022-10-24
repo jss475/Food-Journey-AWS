@@ -1,3 +1,4 @@
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,9 +6,269 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url('about4.jpg');
+  background-size: cover
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+#home {
+  background-image: url('logo1.gif');
+  background-color: black;
+
+  height: 100vh;
+
+  background-position:center;
+  background-repeat: no-repeat;
+  background-size:cover
+}
+
+#restaurant {
+  background-image: url('backgroundRes.png');
+  background-color: black;
+ 
+  height: 130vh;
+
+  background-position:center;
+  background-repeat: no-repeat;
+  background-size:cover
+
+}
+
+
+
+
+/* #about {
+  background-image: url('koreanbbq.jpg');
+  background-color: black;
+  
+  height: 100vh;
+
+  background-position:center;
+  background-repeat: no-repeat;
+  background-size:cover;
+  background-attachment: fixed;
+  opacity: 0.9;
+} */
+
+#sign_in_bg {
+  background-image: url('login.jpg');
+
+  height: 100vh;
+
+  background-position:center;
+  background-repeat: no-repeat;
+  background-size:cover;
+}
+
+#sign_up_bg {
+  background-image: url('signin2.jpg');
+
+  height: 100vh;
+
+  background-position:center;
+  background-repeat: no-repeat;
+  background-size:cover;
+}
+
+
+
+
+/* //////////////////////THIS IS FOR SIGN IN AND SIGN UP ONLY////////////////////// */
+.loginbox{
+  width: 320px;
+  height: 420px;
+  background: #000;
+  color: #fff;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  padding: 70px 30px;
+}
+
+.avatar{
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  position: absolute;
+  top: -70px;
+  left: calc(50% - 60px);
+
+
+}
+
+#sign_in_up_text {
+  margin: 0;
+  padding: 0 0 20px;
+  text-align: center;
+  font-size: 22px;
+}
+
+.loginbox p{
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+}
+
+.loginbox input {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.loginbox input[type="username"], input[type="password"] {
+  border: none;
+  border-bottom: 1px solid #fff;
+  background: transparent;
+  outline: none;
+  height: 40px;
+  color: #fff;
+  font-size: 16px; 
+}
+
+.loginbox button[type="submit"] {
+  border: none;
+  outline: none;
+  height: 40px;
+  background: #D92B4B;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 10px;
+}
+
+
+.loginbox button[type="submit"]:hover {
+  cursor: pointer;
+  background: #3906cf;
+  color: #000;
+}
+/* //////////////////////////////////////////////////  */
+
+
+#aboutdetail p{
+  font-weight: bold;
+  color: rgba(0, 0, 0, 1)
+}
+
+body, html{
+  height:100%;
+
+}
+
+#like_button {
+  margin-right: 5px;
+  border-radius: 12px;
+  margin-top: 10px
+}
+
+#dislike_button{
+  border-radius: 12px;
+  margin-top: 10px
+}
+/* //////////////Restaurant Page CSS////////////////////////////////////  */
+
+#not_like_title {
+  text-align: center;
+  color: #fff;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+}
+#liked_title {
+  text-align: center;
+  color: #fff;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+}
+
+/* ////////////////////// carousel cards effect/////////////////////*/
+ .view_port{
+  --_spacer: var(--size-3);
+  display: grid;
+  gap: var(--_spacer);
+  grid-auto-flow: column;
+  grid-auto-columns: min-content; 
+  /* 25 before */
+
+  padding: 0 var(--_spacer) var(--_spacer);
+
+  overflow-x: scroll;
+  overscroll-behavior-inline: contain;
+
+} 
+ 
+#media-element{
+    display: grid;
+    flex-direction: row;
+    
+  }
+
+.customCard {
+  text-align: center;
+  border:  #D92B4B solid 3px;
+  padding: 1rem;
+  width: 16rem;
+  height: 24rem;
+  border-radius: 10%;
+  margin: 1rem 1rem;
+  font-family: 'Oswald', sans-serif;
+}
+
+.card_image {
+  height: 180px;
+  border: #D92B4B solid 3.5px;
+}
+
+.card_text{
+  height: 30px;
+  width: 200px;
+  margin-bottom: 23px;
+}
+
+
+
+.navbar-brand img{
+  height: 40px;
+  width: 40px;
+  border-radius: 100px
+}
+
+#about {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background: rgba(240,240,240,0.6);
+  font-family: 'Oswald', sans-serif;
+}
+
+.about_h2{
+  font-size: 50px
+}
+
+.about_p{
+  font-size: 30px
+}
+
+em{
+  color: rgb(223, 70, 70)
+}
+
+
+.box{
+  display: none;
+  width: 100%;
+}
+.card-link:hover + .box,.box:hover{
+    display: block;
+    position: absolute;
+    z-index: 100;
+    margin-left: -40%;
+    margin-top: -30%
 }

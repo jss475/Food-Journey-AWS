@@ -5,13 +5,23 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Amplify } from 'aws-amplify';
 import awsExports from './aws-exports';
+import { BrowserRouter } from "react-router-dom";
+import { UserLoggedInProvider } from "./context/UserLoggedIn";
+import { AllRestaurantsProvider } from "./context/AllRestaurants";
+import { SignedInProvider } from "./context/SignedIn";
 Amplify.configure(awsExports);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <SignedInProvider>
+    <AllRestaurantsProvider>
+      <UserLoggedInProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </UserLoggedInProvider>
+    </AllRestaurantsProvider>
+  </SignedInProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
