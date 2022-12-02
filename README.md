@@ -1,70 +1,140 @@
-# Getting Started with Create React App
+# Food Journey
+> Keep a journal of your favorite restaurants! 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Table of contents
+* [General info](#general-info)
+* [Project Demo](#project-demo)
+* [Project Video](#project-video)
+* [Technologies](#technologies)
+* [Setup](#setup)
+* [Features](#features)
+* [Inspiration](#inspiration)
+* [Contact](#contact)
 
-## Available Scripts
+## General info
+Food Journey is a website that allows you to keep track of the restaurants that you like near your area. This website is specifically tailored to restaurants in the NYC area and can be expanded to other locations. 
 
-In the project directory, you can run:
+<div align="center">Welcome to Food Journey. </div>
+<br/>
+<div align="center">
+<kbd>
+<img src="./FJ_Title.png">
+</kbd>
+</div>
 
-### `npm start`
+<br/>
+<div align="center">
+<kbd>
+<img src="./FJ_restaurants.png">
+</kbd>
+</div>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Project Demo 
+[Click to view site](https://main.d1ghkzohvm8pvi.amplifyapp.com/)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Project Video
+[Click to view demo of Food Journey](https://www.loom.com/share/3727ffeece824b7696cb8c036b1316e5)
 
-### `npm test`
+## Technologies
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Backend Development 
+* AWS Amplify
+* GraphQL
+### Frontend Development 
+* JavaScript
+* HTML
+* CSS
+* React.js
+* React-DOM
+* React-Router-DOM
+* Bootstrap
 
-### `npm run build`
+## Setup
+To try out this project: 
+1. Clone the GitHub repository locally to your computer
+1. In the command line, navigate to the root directory of the repository, and type the following: 
+  $ npm install 
+1. Navigate to the client folder, and in the root directory of the client folder, type the following: 
+  $ npm install 
+1. In the client folder, and in the root directory of the client folder, type the following: 
+  $ npm start
+1. The website will need to be connected to AWS Amplify so that the backend can be set up or it can be updated to work with a db.json file.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Code Examples
+### AWS Amplify Studio
+```AWS Amplify
+type Restaurant @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  image: String!
+  location: String!
+  phone: String
+  menulink: String!
+}
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  username: String!
+  password: String!
+  liked: [ID]
+}
+```
 
-### `npm run eject`
+### JavaScript/React.js 
+```React.js
+ // when like button gets clicked, clicked data gets sent to this function
+  function handleLike(data) {
+    // filter all restaurant and return all except for the one that we liked
+    const filteredLike = dislikedRes.filter((res) => {
+      return res.id !== data.id;
+    });
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+    likedArray = userID[0].liked
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    let copyLikedArray = [...likedArray]
+    //add the restaurant id to the liked array
+    copyLikedArray.push(data.id);
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+    const updateUserLiked = async () => {
+      const original = await DataStore.query(User, userID[0].id)
+      let copyOriginal = [...original.liked]
+      copyOriginal.push(data.id)
+      /* Models in DataStore are immutable. To update a record you must use the copyOf function
+      to apply updates to the item’s fields rather than mutating the instance directly */
+      await DataStore.save(User.copyOf(original, updated => {
+        updated.liked = copyOriginal
+      }));
+    }
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+    //updated liked array for the current user
+    updateUserLiked()
 
-## Learn More
+    let alreadyLiked = allRestaurants.filter((res) => {
+      return copyLikedArray.includes(res.id);
+    });
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    // push the data that we liked to liked restauarant list
+    setLikedRes(alreadyLiked);
+    // we set all restaurant to show all excepte for the one that we like
+    setDislikedRes((dislikedRes) => filteredLike);
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  }
+```
 
-### Code Splitting
+## Features
+* Front-End web application utilizing React and using GraphQL to manipulate a user created API
+* Front-End styles and chart components built with Bootstrap and CSS. 
+* Users can create an account through application. However, the account creation is not secure. 
+* View and like/dislike restaurants that are listed.
+* Have your likes and dislikes saved for when you come back.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Status
+Project is finished with option to expand functionality and to optimize the code. Authentication should also be added for user creation.
 
-### Analyzing the Bundle Size
+## Inspiration
+The inspiration for Food Journey came for when my partner and I wanted a way to keep track of the restaurants we liked. In addition, we wanted to keep track of the dishes we liked and that is something that can be added to this website. That way, when you go back to a restaurant you've been to, you can get the dish you liked!
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Contact
+Created by [Joseph Shin](https://www.linkedin.com/in/joseph-sw-shin/) 
+Feel free to contact me for any questions! 
