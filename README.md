@@ -18,7 +18,7 @@ Food Journey is a website that allows you to keep track of the restaurants that 
 <br/>
 <div align="center">
 <kbd>
-<img src="./FJ_Title.png">
+<img src="./FJ_title.png">
 </kbd>
 </div>
 
