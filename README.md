@@ -136,5 +136,5 @@ Project is finished with option to expand functionality and to optimize the code
 The inspiration for Food Journey came for when my partner and I wanted a way to keep track of the restaurants we liked. In addition, we wanted to keep track of the dishes we liked and that is something that can be added to this website. That way, when you go back to a restaurant you've been to, you can get the dish you liked!
 
 ## Contact
-Created by [Joseph Shin](https://www.linkedin.com/in/joseph-sw-shin/) 
+Created by [Joseph Shin](https://www.linkedin.com/in/joseph-sw-shin/) and Hyun Sung Cho
 Feel free to contact me for any questions! 
